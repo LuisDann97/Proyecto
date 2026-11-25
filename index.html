@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GobernanzA Inteligente — Experiencia Inmersiva de Gobierno y Ciberseguridad TI</title>
+  <meta name="description" content="Plataforma Web Inmersiva de Gobierno de TI y Ciberseguridad GobernanzA Inteligente — IPN ESCOM Grupo 7CV4 (COBIT 2019, ITIL V.4, PMBOK y NCh-ISO 27001:2013)." />
+
+  <script>
+    (function() {
+      try {
+        var saved = localStorage.getItem('gi-theme');
+        if (saved === 'light' || saved === 'dark') {
+          document.documentElement.setAttribute('data-theme', saved);
+        }
+      } catch (e) {}
+    })();
+  </script>
+
+  <!-- Tipografías Editoriales y Tecnológicas -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <!-- Atmósfera Inmersiva Multicapa -->
+  <div class="aurora-bg" aria-hidden="true">
+    <div class="aurora-orb aurora-orb--1"></div>
+    <div class="aurora-orb aurora-orb--2"></div>
+    <div class="aurora-orb aurora-orb--3"></div>
+  </div>
+
+  <div class="app-shell" id="appShell">
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Barra Lateral Flotante, Amigable y Colapsable -->
+    <aside class="friendly-sidebar" id="sidebar" aria-label="Menú principal">
+      <div class="sidebar-dock">
+        <!-- Cabecera Amigable -->
+        <div class="dock-header">
+          <div class="dock-brand" data-goto="inicio" title="Ir al inicio">
+            <div class="dock-logo">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z"/>
+                <path d="M9 12l2 2 4-4"/>
+              </svg>
+            </div>
+            <div class="dock-brand-text">
+              <span class="dock-brand-name">Gobernanz<em>A</em></span>
+              <span class="dock-brand-tag">Consultoría Inteligente</span>
+            </div>
+          </div>
+          <button class="dock-collapse-btn" id="collapseSidebarBtn" title="Contraer o expandir barra lateral" aria-label="Contraer menú">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Buscador Rápido Integrado -->
+        <button class="dock-search-pill" id="openSearchBtn" title="Buscar en todo el proyecto (Ctrl+K)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+          <span class="dock-hide-collapsed">Explorar proyecto...</span>
+          <kbd class="dock-hide-collapsed">Ctrl K</kbd>
+        </button>
+
+        <!-- Navegación Amigable con Iconos de Color -->
+        <nav class="dock-nav" id="sidebarNav"></nav>
+
+        <!-- Pie Amigable: Equipo + Selector de Tema -->
+        <div class="dock-footer">
+          <div class="dock-team dock-hide-collapsed">
+            <div class="dock-avatars">
+              <span class="avatar-chip avatar--cyan" title="López Reyes Luis Daniel">LD</span>
+              <span class="avatar-chip avatar--violet" title="Sánchez Velasco Diego">DS</span>
+              <span class="avatar-chip avatar--emerald" title="Escalona Zúñiga Juan Carlos">JC</span>
+            </div>
+            <div class="dock-team-info">
+              <strong>Grupo 7CV4 • ESCOM</strong>
+              <span>Dra. Rocío Palacios S.</span>
+            </div>
+          </div>
+
+          <div class="theme-segmented" id="themeSegmented" role="group" aria-label="Selector de tema visual">
+            <button type="button" class="theme-seg-btn" data-set-theme="light" title="Modo Claro">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+              <span class="dock-hide-collapsed">Claro</span>
+            </button>
+            <button type="button" class="theme-seg-btn" data-set-theme="dark" title="Modo Oscuro">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+              <span class="dock-hide-collapsed">Oscuro</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Lienzo Inmersivo Principal -->
+    <div class="main-stage">
+      <!-- Barra Flotante Superior Minimalista -->
+      <header class="floating-topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Abrir menú">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <line x1="4" y1="7" x2="20" y2="7" />
+              <line x1="4" y1="12" x2="16" y2="12" />
+              <line x1="4" y1="17" x2="20" y2="17" />
+            </svg>
+          </button>
+          <div class="live-crumb">
+            <span class="live-dot"></span>
+            <span class="live-crumb__section" id="breadcrumbCurrent">Experiencia Principal</span>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="framework-pills">
+            <span>COBIT 2019</span>
+            <span>ITIL V.4</span>
+            <span>NCh-ISO 27001</span>
+          </div>
+          <button class="quick-theme-mobile" id="mobileThemeBtn" aria-label="Cambiar tema"></button>
+        </div>
+      </header>
+
+      <!-- Vistas con Diseños Diversificados e Inmersivos -->
+      <main class="immersive-canvas">
+        <section class="view-section active" id="view-inicio"></section>
+        <section class="view-section" id="view-identidad"></section>
+        <section class="view-section" id="view-bsc"></section>
+        <section class="view-section" id="view-cascada"></section>
+        <section class="view-section" id="view-mapa"></section>
+        <section class="view-section" id="view-caso-negocio"></section>
+        <section class="view-section" id="view-cedula-itil"></section>
+        <section class="view-section" id="view-activos"></section>
+        <section class="view-section" id="view-riesgos"></section>
+
+        <!-- Navegador de Siguiente/Anterior Capítulo al final de cada vista -->
+        <div class="chapter-pager" id="chapterPager"></div>
+
+        <footer class="immersive-footer">
+          <div class="immersive-footer__left">
+            <strong>Instituto Politécnico Nacional • Escuela Superior de Cómputo (ESCOM)</strong>
+            <span>Ingeniería en Sistemas Computacionales • IT Governance (7CV4) • 2026</span>
+          </div>
+          <div class="immersive-footer__right">
+            <span>GobernanzA Inteligente — Servicio Clave <code>ID</code></span>
+          </div>
+        </footer>
+      </main>
+    </div>
+  </div>
+
+  <!-- Modal 1: Inspector 360° de Activos -->
+  <div class="modal-backdrop" id="assetModal" role="dialog" aria-modal="true" aria-label="Ficha 360 del Activo">
+    <div class="modal-panel" id="assetModalBody"></div>
+  </div>
+
+  <!-- Modal 2: Buscador Global (Ctrl + K) -->
+  <div class="modal-backdrop" id="searchModal" role="dialog" aria-modal="true" aria-label="Buscador global">
+    <div class="modal-panel" style="max-width:640px;">
+      <div style="display:flex; gap:10px; align-items:center;">
+        <input type="text" class="input-control" id="globalSearchInput" placeholder="Busca un activo (GI_SW_03), objetivo COBIT (APO09), propietario o tema..." style="flex:1; font-size:0.95rem;" />
+        <button class="modal-close" id="closeSearchModalBtn" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="search-results-list" id="globalSearchResults"></div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
