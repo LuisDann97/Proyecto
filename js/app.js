@@ -31,7 +31,7 @@
 
   /* Metadatos amigables para la barra lateral (colores suaves y textos cercanos) */
   const FRIENDLY_NAV = {
-    inicio:        { label: "Inicio Inmersivo",      hint: "Panorama y avance global",     tint: "tint--cyan" },
+    inicio:        { label: "Inicio",                hint: "Panorama y avance global",     tint: "tint--cyan" },
     identidad:     { label: "Nuestra Esencia",       hint: "Manifiesto, misión y alcance", tint: "tint--violet" },
     bsc:           { label: "Puente Estratégico",    hint: "Balanced Scorecard y TI",      tint: "tint--emerald" },
     cascada:       { label: "Cascada COBIT",         hint: "20 metas × 19 objetivos",      tint: "tint--sky" },
@@ -106,6 +106,7 @@
     if (state.currentModule === "mapa") {
       setTimeout(drawStratMapArrows, 340);
     }
+    setTimeout(() => justifyLongTexts(), 340);
   }
 
   function renderSidebar() {
@@ -185,7 +186,25 @@
     if (moduleId === "mapa") {
       requestAnimationFrame(drawStratMapArrows);
     }
+    requestAnimationFrame(() => justifyLongTexts());
     window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function justifyLongTexts(root) {
+    const scope = root || document.querySelector(".view-section.active");
+    if (!scope) return;
+    scope.querySelectorAll("p, .ledger-row span").forEach(el => {
+      if (el.classList.contains("text-justify")) return;
+      const rect = el.getBoundingClientRect();
+      if (!rect.height || !rect.width) return;
+      const style = window.getComputedStyle(el);
+      let lineHeight = parseFloat(style.lineHeight);
+      if (Number.isNaN(lineHeight)) {
+        lineHeight = parseFloat(style.fontSize) * 1.6;
+      }
+      const lines = Math.round(rect.height / lineHeight);
+      el.classList.toggle("auto-justify", lines > 3);
+    });
   }
 
   function closeMobileSidebar() {
@@ -306,10 +325,10 @@
         </div>
       </div>
 
-      <!-- Mosaico Asimétrico Bento de Experiencias -->
+      <!-- Mosaico Asimétrico Bento de Módulos -->
       <div style="margin-bottom:20px;">
         <div class="eyebrow-tag">Recorrido Interactivo</div>
-        <h2 style="font-family:var(--font-display); font-size:1.75rem; font-weight:700;">Arquitectura del Proyecto por Experiencias</h2>
+        <h2 style="font-family:var(--font-display); font-size:1.75rem; font-weight:600;">Arquitectura del Proyecto por Módulos</h2>
       </div>
 
       <div class="bento-showcase">
@@ -408,7 +427,7 @@
     el.innerHTML = `
       <div class="eyebrow-tag">Capítulo Editorial • Fundamentos de la Consultora</div>
       <h1 class="display-heading">Manifiesto y Arquitectura de <span class="gradient-span">GobernanzA Inteligente</span></h1>
-      <p class="lead-paragraph">Una lectura inmersiva sobre por qué las organizaciones mexicanas necesitan transitar del soporte reactivo hacia un modelo auditable de ciberseguridad y gobierno de TI.</p>
+      <p class="lead-paragraph">Un análisis integral sobre por qué las organizaciones mexicanas necesitan transitar del soporte reactivo hacia un modelo auditable de ciberseguridad y gobierno de TI.</p>
 
       <!-- Maquetación Revista Editorial de 2 Columnas Asimétricas -->
       <div class="editorial-split">
@@ -464,7 +483,7 @@
       <div style="margin-bottom:44px;">
         <div class="eyebrow-tag">Propósito del Servicio de TI</div>
         <h2 style="font-family:var(--font-display); font-size:1.65rem; margin-bottom:14px;">Objetivo General y Objetivos Específicos</h2>
-        <p style="font-size:1.02rem; color:var(--text-primary); padding:20px 24px; border-left:4px solid var(--accent-primary); background:var(--bg-subtle); border-radius:0 var(--radius-md) var(--radius-md) 0; margin-bottom:22px;">
+        <p class="text-justify" style="font-size:1.02rem; color:var(--text-primary); padding:20px 24px; border-left:4px solid var(--accent-primary); background:var(--bg-subtle); border-radius:0 var(--radius-md) var(--radius-md) 0; margin-bottom:22px;">
           ${escapeHtml(idData.objetivoGeneral)}
         </p>
         <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:18px;">
@@ -541,7 +560,7 @@
         ${DATA.bsc.map((r, i) => `
           <button class="bsc-dim-pill ${state.activeBscIdx === i ? 'active' : ''}" data-bsc-idx="${i}" style="${state.activeBscIdx === i ? `border-color:${r.color};` : ''}">
             <div style="font-family:var(--font-mono); font-size:0.7rem; color:${r.color}; font-weight:700;">PERSPECTIVA 0${i + 1}</div>
-            <div style="font-family:var(--font-display); font-size:1.05rem; font-weight:700; margin-top:4px;">${escapeHtml(r.dimension)}</div>
+            <div style="font-family:var(--font-display); font-size:1.05rem; font-weight:600; margin-top:4px;">${escapeHtml(r.dimension)}</div>
             <div style="font-size:0.76rem; color:var(--text-muted); margin-top:4px;">${escapeHtml(r.metaCorporativa.metaValor)}</div>
           </button>
         `).join("")}
@@ -594,7 +613,7 @@
       <!-- Justificación Ejecutiva de la Dimensión Seleccionada -->
       <div style="padding:24px 30px; border-radius:var(--radius-lg); background:var(--bg-surface); border-left:4px solid ${activeRow.color}; margin-bottom:28px;">
         <div style="font-family:var(--font-mono); font-size:0.73rem; color:${activeRow.color}; font-weight:700; margin-bottom:6px;">JUSTIFICACIÓN ESTRATÉGICA • DIMENSIÓN ${escapeHtml(activeRow.dimension.toUpperCase())}</div>
-        <p style="font-size:0.95rem; color:var(--text-secondary); line-height:1.75;">${escapeHtml(activeRow.justificacion)}</p>
+        <p class="text-justify" style="font-size:0.95rem; color:var(--text-secondary); line-height:1.75;">${escapeHtml(activeRow.justificacion)}</p>
       </div>
 
       ${state.showFullBscMatrix ? `
@@ -849,7 +868,7 @@
           return `
             <div class="strat-map-lane" style="border-left: 4px solid ${lane.color};">
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-                <span style="font-family:var(--font-display); font-weight:700; font-size:0.9rem; color:${lane.color}; text-transform:uppercase; letter-spacing:0.06em;">${escapeHtml(lane.label)}</span>
+                <span style="font-family:var(--font-display); font-weight:600; font-size:0.9rem; color:${lane.color}; text-transform:uppercase; letter-spacing:0.06em;">${escapeHtml(lane.label)}</span>
                 <span class="badge badge--neutral">${items.length} nodos</span>
               </div>
               <div class="strat-nodes-row">
@@ -940,7 +959,7 @@
         <div>
           <div class="eyebrow-tag">Secciones 2 y 8</div>
           <h3 style="font-family:var(--font-display); font-size:1.45rem; margin-bottom:14px;">Antecedentes y Beneficios Esperados</h3>
-          ${cn.antecedentes.map(p => `<p style="font-size:0.9rem; color:var(--text-secondary); margin-bottom:12px;">${escapeHtml(p)}</p>`).join("")}
+          ${cn.antecedentes.map(p => `<p class="text-justify" style="font-size:0.9rem; color:var(--text-secondary); margin-bottom:12px;">${escapeHtml(p)}</p>`).join("")}
         </div>
         <div>
           <div class="eyebrow-tag">Sección 3 • Justificación Técnica</div>
@@ -978,7 +997,7 @@
       <div style="padding:34px; border-radius:var(--radius-xl); background:var(--bg-banner); border:1px solid var(--border-strong); margin-bottom:44px;">
         <div class="eyebrow-tag">Sección 10 • Evaluación Económica y Estudio de Mercado</div>
         <h2 style="font-family:var(--font-display); font-size:1.6rem; margin-bottom:10px;">Estructura Costo–Beneficio por Proyecto Base ($485,000 MXN)</h2>
-        <p style="font-size:0.9rem; color:var(--text-secondary); max-width:920px;">${escapeHtml(cn.economia.estudioMercado)}</p>
+        <p class="text-justify" style="font-size:0.9rem; color:var(--text-secondary); max-width:920px;">${escapeHtml(cn.economia.estudioMercado)}</p>
 
         <div class="finance-visual-bar">
           <div style="width:64.4%; background:var(--accent-secondary); color:#fff; display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:0.76rem; font-weight:700;">
@@ -1611,6 +1630,7 @@
     `;
 
     bindRiesgosEvents();
+    requestAnimationFrame(() => justifyLongTexts(el));
   }
 
   function bindRiesgosEvents() {
@@ -1697,6 +1717,7 @@
     `;
 
     modal.classList.add("open");
+    requestAnimationFrame(() => justifyLongTexts(body));
     document.getElementById("closeAssetModalBtn")?.addEventListener("click", () => modal.classList.remove("open"));
   }
 
@@ -1787,6 +1808,10 @@
     const initialHash = (window.location.hash || "").replace("#", "");
     navigateTo(initialHash || "inicio", false);
 
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => justifyLongTexts());
+    }
+
     document.body.addEventListener("click", e => {
       const navBtn = e.target.closest("[data-nav]");
       if (navBtn) { navigateTo(navBtn.getAttribute("data-nav")); return; }
@@ -1831,6 +1856,7 @@
 
     window.addEventListener("resize", () => {
       if (state.currentModule === "mapa") requestAnimationFrame(drawStratMapArrows);
+      requestAnimationFrame(() => justifyLongTexts());
     });
 
     document.addEventListener("keydown", e => {
